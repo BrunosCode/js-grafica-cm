@@ -5,27 +5,35 @@
     margin: 0;;
 }
 
+/* UI Background */
 main {
     background-color: black;
-    min-height: 100vh;
+    height: 100vh;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
 }
 
+/* Mined field */
 #field {
-    margin: 0 auto;
-    max-width: 800px;
+    width: 100vh;
+    max-width: 70vw;
     display: flex;
     flex-direction: row;
     justify-content: flex-start;
     align-items: flex-start;
+    align-content: flex-start;
     flex-wrap: wrap;
     flex-grow: 0;
 }
-
 .cell {
     background-color: green;
     border: solid 1px black;
-    width: 80px;
-    height: 80px;
+    width: 10vh;
+    max-width: 70vw;
+    height: 10vh;
+    max-height: 70vw;
 }
 .digged {
     background-color: rgb(80, 38, 38);
@@ -43,3 +51,46 @@ main {
     background-color: black;
     border-radius: 50%;
 }
+
+/* UI console */
+.console {
+    background-color: #2c2c2c;
+    padding: 2rem;
+    color: #d3d2d2;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+}
+.console > * {
+    margin: .5rem 0;
+}
+input {
+    text-align: center;
+    padding: .25rem .5rem;
+    background-color: #d3d2d2;
+    border: none;
+    border-radius: .5rem;
+}
+.btn {
+    width: 5rem;
+    padding: .5rem 0;
+    font-weight: 900;
+    font-size: 1.5rem;
+    background-color: green;
+    border: none;
+    border-radius: 1rem;
+}
+.btn:hover {
+    transform: scale(.8);
+    cursor: pointer;
+}
+.banner {
+    padding: 1rem;
+    border-radius: .5rem;
+    background-color: #d3d2d2;
+    color: red;
+    min-width: 80%;
+}
+

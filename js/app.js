@@ -6,23 +6,29 @@
 
 // ## VARIABLE
 const field = document.getElementById("field");
+const startBtn = document.getElementById("startBtn");
+const results = document.getElementById("results");
 
 // ## FUNCTIONS
 // 1. Ask the number of cells to the user
+// const userChoosenNumber = (max) => {
+//     let userNumber = parseInt(prompt(`Choose a number of rows,  ${max} is the maximum`));
+//     if ( !isNaN(userNumber) && userNumber >= 0 && userNumber <= max ) {
+//         console.log(`userNumber ${userNumber}`);
+//         return userNumber;
+//     } else {
+//         alert("Invalid number");
+//         return userChooseANumber(max);
+//     }
+// }
 const userChoosenNumber = (max) => {
-    let userNumber = parseInt(prompt(`Choose a number of rows,  ${max} is the maximum`))
-    if ( !isNaN(userNumber) && userNumber >= 0 && userNumber <= max ) {
+    let userNumber = document.getElementById("rows").value;
+    if ( !isNaN(userNumber) && userNumber > 0 && userNumber <= max ) {
         console.log(`userNumber ${userNumber}`)
         return userNumber;
     } else {
-        alert("Invalid number");
-        return userChooseANumber(max);
+        results.innerHTML = "Invalid Input";
     }
-}
-
-// 2. Generate random number
-const randomNumber = (min, max) => {
-    
 }
 
 // 2. Generate mines index
@@ -53,13 +59,15 @@ const generateMines = (max, minesNumber) => {
 //     }
 // }
 const createMinedField = (rows, columns, mines) => {
+    field.innerHTML = "";
+    results.innerHTML = "";
     let cells = rows * columns;
     console.log(`cells ${cells}`);
     for (let i = 0; i < cells; i++) {
         if (mines.includes(i)) {
-            field.innerHTML += `<div class="cell mined"></div>`
+            field.innerHTML += `<div class="cell mined"></div>`;
         } else {
-            field.innerHTML += `<div class="cell"></div>`
+            field.innerHTML += `<div class="cell"></div>`;
         }
     }
 }
@@ -70,7 +78,8 @@ const digCell = (event) => {
     console.log(diggedCell);
     diggedCell.classList.add("digged");
     if (diggedCell.classList.contains("mined")) {
-        alert("You lost")
+        results.innerHTML = "You lost";
+        field.innerHTML = "";
     }
 }
 
@@ -80,7 +89,9 @@ field.addEventListener("click", digCell);
 
 // ## MAIN SCRIPT
 // 6. Start the script and create field
-let rows = 10;
-let cols = userChoosenNumber(10);
-let minesNumber = 3 * cols;
-createMinedField(rows, cols, generateMines(rows * cols, minesNumber));
+startBtn.addEventListener("click", () => {
+    let rows = 10;
+    let cols = userChoosenNumber(10);
+    let minesNumber = 3 * cols;
+    createMinedField(rows, cols, generateMines(rows * cols, minesNumber));
+})
