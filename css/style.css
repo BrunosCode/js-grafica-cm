@@ -1,0 +1,27 @@
+/* RESET  */
+* {
+    box-sizing: border-box;
+    padding: 0;
+    margin: 0;;
+}
+
+#field {
+    margin: 0 auto;
+    max-width: 1000px;
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: flex-start;
+    flex-wrap: wrap;
+    flex-grow: 0;
+}
+
+.cell {
+    background-color: green;
+    border: solid 1px black;
+    width: 100px;
+    height: 100px;
+}
+.digged {
+    background-color: brown;
+}
