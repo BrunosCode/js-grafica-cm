@@ -9,31 +9,78 @@ const field = document.getElementById("field");
 
 // ## FUNCTIONS
 // 1. Ask the number of cells to the user
-const userChoosenNumber = (min, max) => {
-    let userNumber = parseInt(prompt(`Choose a number of rows, between ${min} and ${max}`))
-    if ( !isNaN(userNumber) && userNumber >= min && userNumber <= max ) {
+const userChoosenNumber = (max) => {
+    let userNumber = parseInt(prompt(`Choose a number of rows,  ${max} is the maximum`))
+    if ( !isNaN(userNumber) && userNumber >= 0 && userNumber <= max ) {
+        console.log(`userNumber ${userNumber}`)
         return userNumber;
     } else {
         alert("Invalid number");
-        return userChooseANumber(min, max);
+        return userChooseANumber(max);
     }
 }
-// 2. Function inject a number of html cells in the document
-const createField = (rows, columns) => {
+
+// 2. Generate random number
+const randomNumber = (min, max) => {
+    
+}
+
+// 2. Generate mines index
+// input: min, max, number of mines
+const generateMines = (max, minesNumber) => {
+    let mines = [];
+    // to avoid mines index repetition
+    // 2a. create an array containing each cell's index
+    let minesStock = [];
+    for (let i = 0; i < max; i++) {
+        minesStock.push(i);
+    }
+    // 2b. pick a random number from minesStock, remove it and add it to the mines array
+    for (let i = 0; i < minesNumber; i++) {
+        let randomNumber = Math.floor(Math.random() * minesStock.length);
+        mines.push(minesStock[randomNumber]);
+        minesStock.splice(randomNumber, 1);
+    }
+    console.log(`minesIndex ${mines}`);
+    return mines;
+}
+
+// 3. Function inject a number of html cells in the document, some of which are mined
+// const createField = (rows, columns) => {
+//     let cells = rows * columns;
+//     for (let i = 0; i < cells; i++) {
+//         field.innerHTML += `<div class="cell mined"></div>`
+//     }
+// }
+const createMinedField = (rows, columns, mines) => {
     let cells = rows * columns;
+    console.log(`cells ${cells}`);
     for (let i = 0; i < cells; i++) {
-        field.innerHTML += `<div class="cell"></div>`
+        if (mines.includes(i)) {
+            field.innerHTML += `<div class="cell mined"></div>`
+        } else {
+            field.innerHTML += `<div class="cell"></div>`
+        }
     }
 }
-// 3. Color of red the clicked cell
+
+// 4. Color of red the clicked cell
 const digCell = (event) => {
-    event.target.classList.add("digged");
+    let diggedCell = event.target;
+    console.log(diggedCell);
+    diggedCell.classList.add("digged");
+    if (diggedCell.classList.contains("mined")) {
+        alert("You lost")
+    }
 }
 
 // ## EVENT LISTENERS
-// 4. Add event listener to the field
+// 5. Add event listener to the field
 field.addEventListener("click", digCell);
 
 // ## MAIN SCRIPT
-// 5. Start the script and create field
-createField(10, userChoosenNumber(1, 20));
+// 6. Start the script and create field
+let rows = 10;
+let cols = userChoosenNumber(10);
+let minesNumber = 3 * cols;
+createMinedField(rows, cols, generateMines(rows * cols, minesNumber));
