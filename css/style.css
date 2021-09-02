@@ -37,9 +37,6 @@ main {
 }
 .digged {
     background-color: rgb(80, 38, 38);
-}
-
-.digged.mined {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -51,6 +48,37 @@ main {
     background-color: black;
     border-radius: 50%;
 }
+[data-proximity="1"].digged::after {
+    content: "1";
+    height: 60%;
+    width: 60%;
+    color: white;
+}
+[data-proximity="2"].digged::after {
+    content: "2";
+    height: 60%;
+    width: 60%;
+    color: white;
+}
+[data-proximity="3"].digged::after {
+    content: "3";
+    height: 60%;
+    width: 60%;
+    color: white;
+}
+[data-proximity="4"].digged::after {
+    content: "4";
+    height: 60%;
+    width: 60%;
+    color: white;
+}
+[data-proximity="5"].digged::after {
+    content: "5";
+    height: 60%;
+    width: 60%;
+    color: white;
+}
+
 
 /* UI console */
 .console {
