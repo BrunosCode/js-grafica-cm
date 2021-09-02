@@ -59,14 +59,14 @@ const generateMines = (max, minesNumber) => {
 //         field.innerHTML += `<div class="cell mined"></div>`
 //     }
 // }
-const createMinedField = (rows, columns, mines) => {
+const createMinedField = (field, rows, cols, mines) => {
     // 3a. reset the field
     field.innerHTML = "";
     // reset the console
     results.innerHTML = "";
 
     // 3b. number of cells
-    let cells = rows * columns;
+    let cells = rows * cols;
     console.log(`cells ${cells}`);
 
     // 3c. generate mined and not mined cells
@@ -74,40 +74,96 @@ const createMinedField = (rows, columns, mines) => {
         if (mines.includes(i)) {
             field.innerHTML += `<div class="cell mined"></div>`;
         } else {
-            field.innerHTML += `<div data-number="1" class="cell"></div>`;
+            field.innerHTML += `<div data-proximity="1" class="cell"></div>`;
         }
     }
 
     // 3d. update data-number of the non mined cells
     // based on their proximity with the mined ones
+    let cellsList = field.childNodes;
     for(let i = 0; i < mines.length; i++){
+        console.log(`current mine ${mines[i]}`);
         // ### Conditions based on the mine position
         // if mine in first cell
-        if ( mines[i] / cols < 1 && (mines[i] + 1) % cols = 1 ) {
-        
+        if ( mines[i] / cols < 1 && (mines[i] + 1) % cols == 1 ) {
+            let proximityList = [ mines[i] + 1, mines[i] + cols, mines[i] + cols + 1];
+            console.log(proximityList);
+
+            for (let i = 0; i < proximityList.length; i++) {
+                cellsList[proximityList[i]].dataset.proximity = parseInt(cellsList[proximityList[i]].dataset.proximity) + 1;
+                console.log(`${proximityList[i]} updated`);
+            }
         // if mine in the last cell of the first row
-        } else if ( mines[i] / cols < 1 && (mines[i] + 1) % cols = 0 ) {
+        } else if ( mines[i] / cols < 1 && (mines[i] + 1) % cols == 0 ) {
+            let proximityList = [ mines[i] + 1, mines[i] + cols - 1, mines[i] + cols];
+            console.log(proximityList);
 
+            for (let i = 0; i < proximityList.length; i++) {
+                cellsList[proximityList[i]].dataset.proximity = parseInt(cellsList[proximityList[i]].dataset.proximity) + 1;
+                console.log(`${proximityList[i]} updated`);
+            }
         // if mine in the first cell of the last row   
-        } else if ( mines[i] / cols >= ( rows - 1 ) && (mines[i] + 1) % cols = 1 ) {
+        } else if ( mines[i] / cols >= ( rows - 1 ) && (mines[i] + 1) % cols == 1 ) {
+            let proximityList = [ mines[i] + 1, mines[i] - cols, mines[i] - cols + 1];
+            console.log(proximityList);
 
+            for (let i = 0; i < proximityList.length; i++) {
+                cellsList[proximityList[i]].dataset.proximity = parseInt(cellsList[proximityList[i]].dataset.proximity) + 1;
+                console.log(`${proximityList[i]} updated`);
+            }
         // if mine in the last cell
-        } else if ( mines[i] / cols >= ( rows - 1 ) && (mines[i] + 1) % cols = 0 ) {
+        } else if ( mines[i] / cols >= ( rows - 1 ) && (mines[i] + 1) % cols == 0 ) {
+            let proximityList = [ mines[i] - 1, mines[i] - cols - 1, mines[i] - cols];
+            console.log(proximityList);
 
+            for (let i = 0; i < proximityList.length; i++) {
+                cellsList[proximityList[i]].dataset.proximity = parseInt(cellsList[proximityList[i]].dataset.proximity) + 1;
+                console.log(`${proximityList[i]} updated`);
+            }
         // if mine in the first row
         } else if ( mines[i] / cols < 1 ) {
+            let proximityList = [ mines[i] - 1, mines[i] + 1, mines[i] + cols - 1, mines[i] + cols + 1];
+            console.log(proximityList);
 
+            for (let i = 0; i < proximityList.length; i++) {
+                cellsList[proximityList[i]].dataset.proximity = parseInt(cellsList[proximityList[i]].dataset.proximity) + 1;
+                console.log(`${proximityList[i]} updated`);
+            }
         // if mine in the last row
-        } else if ( mines[i] / cols >= ( rows - 1 ) {
+        } else if ( mines[i] / cols >= ( rows - 1 )) {
+            let proximityList = [ mines[i] - 1, mines[i] + 1, mines[i] - cols - 1, mines[i] - cols + 1];
+            console.log(proximityList);
 
+            for (let i = 0; i < proximityList.length; i++) {
+                cellsList[proximityList[i]].dataset.proximity = parseInt(cellsList[proximityList[i]].dataset.proximity) + 1;
+                console.log(`${proximityList[i]} updated`);
+            }
         // if mine in the first col   
-        } else if ( (mines[i] + 1) % cols = 1 ) {
+        } else if ( (mines[i] + 1) % cols == 1 ) {
+            let proximityList = [ mines[i] + 1, mines[i] - cols, mines[i] - cols + 1, mines[i] + cols, mines[i] + cols + 1 ];
+            console.log(proximityList);
 
+            for (let i = 0; i < proximityList.length; i++) {
+                cellsList[proximityList[i]].dataset.proximity = parseInt(cellsList[proximityList[i]].dataset.proximity) + 1;
+                console.log(`${proximityList[i]} updated`);
+            }
         // if mine in the last col   
-        } else if ( (mines[i] + 1) % cols = 0 ) {
+        } else if ( (mines[i] + 1) % cols == 0 ) {
+            let proximityList = [ mines[i] - 1, mines[i] - cols, mines[i] - cols - 1, mines[i] + cols, mines[i] + cols - 1 ];
+            console.log(proximityList);
 
+            for (let i = 0; i < proximityList.length; i++) {
+                cellsList[proximityList[i]].dataset.proximity = parseInt(cellsList[proximityList[i]].dataset.proximity) + 1;
+                console.log(`${proximityList[i]} updated`);
+            }
         } else {
-            
+            let proximityList = [ mines[i] - 1, mines[i] + 1, mines[i] - cols - 1, mines[i] - cols, mines[i] - cols + 1, mines[i] + cols - 1, mines[i] + cols, mines[i] + cols + 1];
+            console.log(proximityList);
+
+            for (let i = 0; i < proximityList.length; i++) {
+                cellsList[proximityList[i]].dataset.proximity = parseInt(cellsList[proximityList[i]].dataset.proximity) + 1;
+                console.log(`${proximityList[i]} updated`);
+            }
         }
     }
 }
@@ -130,7 +186,7 @@ field.addEventListener("click", digCell);
 // 6. Start the script and create field
 startBtn.addEventListener("click", () => {
     let rows = 10;
-    let cols = userChoosenNumber(10);
-    let minesNumber = 3 * cols;
-    createMinedField(rows, cols, generateMines(rows * cols, minesNumber));
+    let cols = parseInt(userChoosenNumber(10));
+    let minesNumber = 1 * cols;
+    createMinedField(field, rows, cols, generateMines(rows * cols, minesNumber));
 })
