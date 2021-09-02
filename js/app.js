@@ -8,6 +8,7 @@
 const field = document.getElementById("field");
 const startBtn = document.getElementById("startBtn");
 const results = document.getElementById("results");
+const inputLabel = document.getElementById("inputLabel");
 
 // ## FUNCTIONS
 // 1. Ask the number of cells to the user
@@ -59,15 +60,54 @@ const generateMines = (max, minesNumber) => {
 //     }
 // }
 const createMinedField = (rows, columns, mines) => {
+    // 3a. reset the field
     field.innerHTML = "";
+    // reset the console
     results.innerHTML = "";
+
+    // 3b. number of cells
     let cells = rows * columns;
     console.log(`cells ${cells}`);
+
+    // 3c. generate mined and not mined cells
     for (let i = 0; i < cells; i++) {
         if (mines.includes(i)) {
             field.innerHTML += `<div class="cell mined"></div>`;
         } else {
-            field.innerHTML += `<div class="cell"></div>`;
+            field.innerHTML += `<div data-number="1" class="cell"></div>`;
+        }
+    }
+
+    // 3d. update data-number of the non mined cells
+    // based on their proximity with the mined ones
+    for(let i = 0; i < mines.length; i++){
+        // ### Conditions based on the mine position
+        // if mine in first cell
+        if ( mines[i] / cols < 1 && (mines[i] + 1) % cols = 1 ) {
+        
+        // if mine in the last cell of the first row
+        } else if ( mines[i] / cols < 1 && (mines[i] + 1) % cols = 0 ) {
+
+        // if mine in the first cell of the last row   
+        } else if ( mines[i] / cols >= ( rows - 1 ) && (mines[i] + 1) % cols = 1 ) {
+
+        // if mine in the last cell
+        } else if ( mines[i] / cols >= ( rows - 1 ) && (mines[i] + 1) % cols = 0 ) {
+
+        // if mine in the first row
+        } else if ( mines[i] / cols < 1 ) {
+
+        // if mine in the last row
+        } else if ( mines[i] / cols >= ( rows - 1 ) {
+
+        // if mine in the first col   
+        } else if ( (mines[i] + 1) % cols = 1 ) {
+
+        // if mine in the last col   
+        } else if ( (mines[i] + 1) % cols = 0 ) {
+
+        } else {
+            
         }
     }
 }
@@ -79,7 +119,6 @@ const digCell = (event) => {
     diggedCell.classList.add("digged");
     if (diggedCell.classList.contains("mined")) {
         results.innerHTML = "You lost";
-        field.innerHTML = "";
     }
 }
 
