@@ -4,12 +4,13 @@
 
 // # MINED FIELD
 
-// ## VARIABLE
+// ## VARIABLES
 const field = document.getElementById("field");
 const startBtn = document.getElementById("startBtn");
 const results = document.getElementById("results");
 const userRows = document.getElementById("rows");
 const userCols = document.getElementById("cols");
+let points = 0;
 
 // ## FUNCTIONS
 // 1. Ask the number of cells to the user
@@ -180,10 +181,13 @@ const createMinedField = (field, rows, cols, mines) => {
 const digCell = (event) => {
     let diggedCell = event.target;
     console.log(diggedCell);
-    diggedCell.classList.add("digged");
     if (diggedCell.classList.contains("mined")) {
         results.innerHTML = "You lost";
+    } else if (!diggedCell.classList.contains("digged")) {
+        points += 1;
+        results.innerHTML = `Your Points: ${points}`;
     }
+    diggedCell.classList.add("digged");
 }
 
 // ## EVENT LISTENERS
@@ -195,6 +199,7 @@ field.addEventListener("click", digCell);
 startBtn.addEventListener("click", () => {
     let rows = parseInt(userChoosenNumber(userRows.value, 10));
     let cols = parseInt(userChoosenNumber(userCols.value, 10));
-    let minesNumber = 1 * cols;
+    let minesNumber = 16;
+    points = 0;
     createMinedField(field, rows, cols, generateMines(rows * cols, minesNumber));
 })
