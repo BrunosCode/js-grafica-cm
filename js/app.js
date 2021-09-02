@@ -8,7 +8,8 @@
 const field = document.getElementById("field");
 const startBtn = document.getElementById("startBtn");
 const results = document.getElementById("results");
-const inputLabel = document.getElementById("inputLabel");
+const userRows = document.getElementById("rows");
+const userCols = document.getElementById("cols");
 
 // ## FUNCTIONS
 // 1. Ask the number of cells to the user
@@ -22,11 +23,10 @@ const inputLabel = document.getElementById("inputLabel");
 //         return userChooseANumber(max);
 //     }
 // }
-const userChoosenNumber = (max) => {
-    let userNumber = document.getElementById("rows").value;
-    if ( !isNaN(userNumber) && userNumber > 0 && userNumber <= max ) {
-        console.log(`userNumber ${userNumber}`)
-        return userNumber;
+const userChoosenNumber = (input, max) => {
+    if ( !isNaN(input) && input > 0 && input <= max ) {
+        console.log(`input ${input}`)
+        return input;
     } else {
         results.innerHTML = "Invalid Input";
     }
@@ -74,7 +74,7 @@ const createMinedField = (field, rows, cols, mines) => {
         if (mines.includes(i)) {
             field.innerHTML += `<div class="cell mined"></div>`;
         } else {
-            field.innerHTML += `<div data-proximity="1" class="cell"></div>`;
+            field.innerHTML += `<div data-proximity="0" class="cell"></div>`;
         }
     }
 
@@ -157,7 +157,15 @@ const createMinedField = (field, rows, cols, mines) => {
                 console.log(`${proximityList[i]} updated`);
             }
         } else {
-            let proximityList = [ mines[i] - 1, mines[i] + 1, mines[i] - cols - 1, mines[i] - cols, mines[i] - cols + 1, mines[i] + cols - 1, mines[i] + cols, mines[i] + cols + 1];
+            let proximityList = [ 
+                mines[i] - 1, 
+                mines[i] + 1, 
+                mines[i] - cols - 1, 
+                mines[i] - cols, 
+                mines[i] - cols + 1, 
+                mines[i] + cols - 1, 
+                mines[i] + cols, 
+                mines[i] + cols + 1];
             console.log(proximityList);
 
             for (let i = 0; i < proximityList.length; i++) {
@@ -185,8 +193,8 @@ field.addEventListener("click", digCell);
 // ## MAIN SCRIPT
 // 6. Start the script and create field
 startBtn.addEventListener("click", () => {
-    let rows = 10;
-    let cols = parseInt(userChoosenNumber(10));
+    let rows = parseInt(userChoosenNumber(userRows.value, 10));
+    let cols = parseInt(userChoosenNumber(userCols.value, 10));
     let minesNumber = 1 * cols;
     createMinedField(field, rows, cols, generateMines(rows * cols, minesNumber));
 })
